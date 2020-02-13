@@ -15,12 +15,12 @@ public class AdminController {
 		return "admin/main";
 	}
 
-	@RequestMapping(value = "/product", method = RequestMethod.GET)
+	// @RequestMapping(value = "/product", method = RequestMethod.GET)
 	public String admin(Model model) {
 
 		model.addAttribute("BODY", "PRODUCT");
 
-		return "admin/home";
+		return "admin/main";
 	}
 
 }
