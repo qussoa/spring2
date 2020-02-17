@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 
 import org.apache.ibatis.type.Alias;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Length;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,7 +55,8 @@ public class ProductVO {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long p_id;
+	@Column(name="p_id")
+	private long id;
 	
 	/*
 	 * 입력값이 공백일 경우 error
@@ -68,7 +70,7 @@ public class ProductVO {
 	 * @Min(), max()
 	 */
 	@Size(max = 13, message = "* 상품코드 13자 이하")
-	@Column(name="p_code", length = 13)
+	@Column(name="p_code", length = 13,unique = true,nullable = false)
 	private String p_code;
 	
 	/* 
@@ -84,9 +86,11 @@ public class ProductVO {
 	@Column(name="p_name")
 	private String p_name;
 	
+	@Size(min=5, max=5,message = "*품목코드확인")
 	@Column(name="p_bcode", length = 5)
 	private String p_bcode;
 	
+	@Size(min=5, max=5,message = "*거래처코드확인" )
 	@Column(name="p_dcode", length = 5)
 	private String p_dcode;
 	
