@@ -8,6 +8,28 @@
 <head>
 <%@ include file="/WEB-INF/views/include/include-head.jspf"%>
 </head>
+<style>
+.in-errors {
+	color: red;
+	font-size: 8px;
+}
+
+tr, td, th {
+	white-space: nowrap;
+}
+
+.list-body {
+	overflow: auto;
+}
+
+td.p_name {
+	width: 30px;
+	padding: 0 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+}
+</style>
 <body>
 	<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
 		<ul class="navbar-nav">
@@ -17,9 +39,10 @@
 			<li class="navbar-item"><a class="nav-link"
 				href="${rootPath}/admin/product/">상품정보</a></li>
 			<li class="navbar-item"><a class="nav-link" href="#">품목정보</a></li>
-			<li class="navbar-item"><a class="nav-link" href="${rootPath}/admin/dept/">거래처정보</a></li>
-			<li class="navbar-item">
-			<form:form action="${rootPath}/logout" name="logout_form">
+			<li class="navbar-item"><a class="nav-link"
+				href="${rootPath}/admin/dept">거래처정보</a></li>
+			<li class="navbar-item"><form:form action="${rootPath}/logout"
+					name="logout_form">
 					<a class="nav-link" onclick="document.logout_form.submit()"
 						href="javascript:void(0)">로그아웃</a>
 				</form:form></li>
@@ -29,6 +52,9 @@
 		<c:choose>
 			<c:when test="${BODY == 'PRODUCT'}">
 				<%@ include file="/WEB-INF/views/admin/product.jsp"%>
+			</c:when>
+			<c:when test="${BODY == 'DEPT' }">
+				<%@ include file="/WEB-INF/views/admin/dept.jsp"%>
 			</c:when>
 		</c:choose>
 	</section>

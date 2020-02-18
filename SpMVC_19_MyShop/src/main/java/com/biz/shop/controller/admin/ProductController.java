@@ -33,32 +33,29 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
-	public String product(@ModelAttribute("productVO") ProductVO productVO,
-			Model model) {
-
+	public String product(@ModelAttribute("productVO") ProductVO productVO, Model model) {
 		productVO = new ProductVO();
 
-		List<ProductVO> proList = proService.selectAll();
-
-		model.addAttribute("PRO_LIST", proList);
+		this.modelMapping(model);
 		model.addAttribute("productVO", productVO);
-		model.addAttribute("BODY", "PRODUCT");
-		
-		
 		return "admin/main";
+	}
 
+	@RequestMapping(value = "/detail", method = RequestMethod.POST)
+	public String product_detail(Model model, @Valid @ModelAttribute("productVO") ProductVO productVO,
+			BindingResult result, SessionStatus status) {
+		if (result.hasErrors()) {
+			this.modelMapping(model);
+			return "admin/main";
+		}
+		this.modelMapping(model);
+		model.addAttribute("PRO_BODY","DETAIL");
+		return "admin/main";
 	}
 
 	@RequestMapping(value = "/input", method = RequestMethod.POST)
-	public String product(Model model, @Valid @ModelAttribute("productVO") ProductVO productVO, 
-			BindingResult result,SessionStatus status) {
-
-		if (result.hasErrors()) {
-			model.addAttribute("BODY", "PRODUCT");
-
-			return "admin/main";
-
-		}
+	public String product(Model model, @Valid @ModelAttribute("productVO") ProductVO productVO,
+			SessionStatus status) {
 
 		proService.save(productVO);
 		status.setComplete();
@@ -66,20 +63,21 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-	public String update(@ModelAttribute("productVO") ProductVO productVO,
-			@PathVariable("id") String strId, Model model) {
-
-		List<ProductVO> proList = proService.selectAll();
+	public String update(@ModelAttribute("productVO") ProductVO productVO, @PathVariable("id") String strId,
+			Model model) {
+		this.modelMapping(model);
 
 		long id = Long.valueOf(strId);
 
 		productVO = proService.findById(id);
-
-		model.addAttribute("PRO_LIST", proList);
 		model.addAttribute("productVO", productVO);
-		model.addAttribute("BODY", "PRODUCT");
 
 		return "admin/main";
+	}
 
+	private void modelMapping(Model model) {
+		List<ProductVO> proList = proService.selectAll();
+		model.addAttribute("PRO_LIST", proList);
+		model.addAttribute("BODY", "PRODUCT");
 	}
 }

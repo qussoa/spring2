@@ -9,6 +9,17 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.apache.ibatis.type.Alias;
+
+import com.biz.shop.domain.ProductVO.ProductVOBuilder;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 /*
  * 거래처정보를 저장할 테이블 Entity설계
  * id 
@@ -22,6 +33,13 @@ import javax.validation.constraints.Size;
  * 담당자 연락처 d_mtel
  * 비고 d_remark
  */
+@Alias("deptVO")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@AllArgsConstructor
+@Builder
 
 @Entity
 @Table(name = "tbl_dept", schema = "emsDB")

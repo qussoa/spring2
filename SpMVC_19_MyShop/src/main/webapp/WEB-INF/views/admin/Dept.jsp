@@ -3,28 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<style>
-.in-errors {
-	color: red;
-	font-size: 8px;
-}
 
-tr, td, th {
-	white-space: nowrap;
-}
-
-.dept-list {
-	overflow: auto;
-}
-
-td.d_name {
-	width: 30px;
-	padding: 0 5px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: inline-block;
-}
-</style>
 <section class="container-fluid row">
 	<article class="col-7 bg-ligth detp-input">
 		<form:form action="${rootPath}/admin/dept/input" modelAttribute="deptVO">
@@ -64,8 +43,8 @@ td.d_name {
 			</div>			
 		</form:form>
 	</article>
-	<article class="col-4 bg-ligth dept-list">
-
+	<article class="col-4 bg-ligth list-body">
+		<%@ include file="/WEB-INF/views/admin/dept_list.jsp" %>
 	</article>
 
 </section>
