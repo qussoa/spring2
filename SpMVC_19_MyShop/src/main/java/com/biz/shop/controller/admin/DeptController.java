@@ -28,7 +28,7 @@ public class DeptController {
 
 	@RequestMapping(value = { "/", "" }, method = RequestMethod.GET)
 	public String input(Model model) {
-		
+
 		this.modelMapping(model);
 		DeptVO deptVO = new DeptVO();
 
@@ -37,13 +37,19 @@ public class DeptController {
 		return "admin/main";
 	}
 
+	@RequestMapping(value = {"/search/{search}","/search/"}, method = RequestMethod.GET)
+	public String search(@PathVariable("search") String search, Model model) {
+		this.modelMapping(model,search);
+		return "admin/dept_list";
+	}
+
 	@RequestMapping(value = "/input", method = RequestMethod.POST)
 	public String input(@Valid @ModelAttribute("deptVO") DeptVO deptVO, BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
 			this.modelMapping(model);
 			model.addAttribute("deptVO", deptVO);
-			
+
 			return "admin/main";
 		}
 		DeptVO ret = dService.save(deptVO);
@@ -51,29 +57,42 @@ public class DeptController {
 		return "redirect:/admin/dept";
 	}
 
-	private void modelMapping(Model model) {
-		List<DeptVO> deptList = dService.selectAll();
+	private void modelMapping(Model model, String search) {
+
+		List<DeptVO> deptList = null;
+
+		if (search == null) {
+			deptList = dService.selectAll();
+		} else {
+			deptList = dService.findByDName(search);
+		}
+
 		model.addAttribute("DEPT_LIST", deptList);
 		model.addAttribute("BODY", "DEPT");
 	}
-	
-	@RequestMapping(value = "/update/{id}",method=RequestMethod.GET)
-	public String update(@PathVariable("id") long id, @ModelAttribute("deptVO") DeptVO deptVO,Model model) {
-		
+
+	private void modelMapping(Model model) {
+
+		this.modelMapping(model, null);
+
+	}
+
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+	public String update(@PathVariable("id") long id, @ModelAttribute("deptVO") DeptVO deptVO, Model model) {
+
 		this.modelMapping(model);
 		deptVO = dService.findById(id);
-		model.addAttribute("deptVO",deptVO);
-		
+		model.addAttribute("deptVO", deptVO);
+
 		return "admin/main";
 	}
-	
-	@RequestMapping(value = "/list",method=RequestMethod.GET)
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) {
-		
+
 		this.modelMapping(model);
-		
+
 		return "admin/dept_list";
 	}
-	
-	
+
 }

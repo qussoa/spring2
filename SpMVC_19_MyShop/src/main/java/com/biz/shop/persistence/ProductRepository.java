@@ -1,4 +1,6 @@
-package com.biz.shop.repository;
+package com.biz.shop.persistence;
+
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -33,6 +35,7 @@ import com.biz.shop.domain.ProductVO;
  * boolean    Boolean
  * =================================
  */
-public interface ProductDao extends JpaRepository<ProductVO, Long> {
+public interface ProductRepository extends JpaRepository<ProductVO, Long> {
+
 	// C(R)UD의 기본 method가 준비되었있다
 }

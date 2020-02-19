@@ -5,8 +5,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.biz.shop.dao.ProductDao;
 import com.biz.shop.domain.ProductVO;
-import com.biz.shop.repository.ProductDao;
+import com.biz.shop.persistence.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,16 +17,17 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ProductService {
 
-	private final ProductDao pDao;
+	private final ProductRepository pRepo;
+	private final ProductDao proDao;
 	
 	public void save(ProductVO productVO) {
-		ProductVO v = pDao.save(productVO);
+		ProductVO v = pRepo.save(productVO);
 		log.debug("상품 정보 : " + v.toString());
 	}
 	
 	public List<ProductVO> selectAll(){
 		
-		List<ProductVO> proList = pDao.findAll();		
+		List<ProductVO> proList = pRepo.findAll();		
 		return proList;
 	}
 
@@ -44,8 +46,15 @@ public class ProductService {
 		 * 이것은 혹시 모든 NullPointException을 방지하기 위한 조치
 		 * 실제 VO 객체를 추출할 때는 return ret.get()을 사용한다
 		 */
-		Optional<ProductVO> proVO = pDao.findById(id);
+		Optional<ProductVO> proVO = pRepo.findById(id);
 		
 		return proVO.get();
+	}
+
+	public List<ProductVO> findByPName(String p_name) {
+
+		List<ProductVO> proList = proDao.findByName(p_name);
+			
+		return proList;
 	}
 }

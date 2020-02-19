@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="rootPath" value="${pageContext.request.contextPath}" />
-
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <!DOCTYPE html>
@@ -22,6 +21,7 @@
 	<header class="jumbotron">
 		<h3>MY SHOP</h3>
 	</header>
+
 	<nav class="navbar navbar-expand-sm bg-light">
 		<ul class="navbar-nav">
 			<li class="nav-item"><a class="nav-link" href="${rootPath}">Home</a></li>
@@ -46,6 +46,33 @@
 			</sec:authorize>
 		</ul>
 	</nav>
-
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

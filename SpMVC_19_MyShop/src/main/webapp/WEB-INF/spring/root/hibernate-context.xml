@@ -51,6 +51,6 @@
 	</bean>
 
 	<jpa:repositories
-		base-package="com.biz.shop.repository" />
+		base-package="com.biz.shop.persistence" />
 
 </beans>

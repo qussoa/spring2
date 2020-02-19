@@ -4,8 +4,7 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	version="4.0">
 
-	<!-- forceEncoding spring security를 
-		설정했을 경우 404 등의 오류메시지의 한글이 깨져 ?? 모양으로 
+	<!-- forceEncoding spring security를 설정했을 경우 404 등의 오류메시지의 한글이 깨져 ?? 모양으로 
 		보일때 해당 설정을 수행하면 한글 깨짐을 방지할 수 있다 -->
 	<filter>
 		<filter-name>encKor</filter-name>
@@ -62,7 +61,11 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/appServlet/*-context.xml</param-value>
+			<param-value>
+			/WEB-INF/spring/root/jasypt-context.xml
+			/WEB-INF/spring/appServlet/*-context.xml
+			
+			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

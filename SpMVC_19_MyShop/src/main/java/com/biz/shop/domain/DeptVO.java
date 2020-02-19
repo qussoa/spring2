@@ -75,5 +75,5 @@ public class DeptVO {
 
 	@Column(length = 20)
 	private String d_mtel;
-	private String d_remark;
+	private String d_rem;
 }
