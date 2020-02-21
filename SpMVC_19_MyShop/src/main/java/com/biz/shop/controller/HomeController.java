@@ -23,7 +23,7 @@ public class HomeController {
 	
 		log.debug("홈컨트롤러");
 		
-		return "redirect:/admin";
+		return "redirect:/user/product/list";
 	}
 	
 }

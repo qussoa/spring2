@@ -13,39 +13,47 @@
 		$("a.logout").click(function() {
 			$("#logout").submit()
 		})
+		
+		$("#btn-search").click(
+			function() {
+				let product = $("#search-box").val()
+				document.location.href = "${rootPath}/user/product/list?p_name="+ product
+			})
 
 	})
 </script>
+<style>
+* {
+	justify-content: center;
+	text-align: center;
+}
+
+.header {
+	justify-content: center;
+	text-align: center;
+}
+
+#form-box {
+	text-align: center;
+	justify-content: center;
+	margin-top: 20px;
+}
+</style>
 </head>
 <body>
 	<header class="jumbotron">
 		<h3>MY SHOP</h3>
 	</header>
+<%@ include file="/WEB-INF/views/include/include-nav.jsp" %>
 
-	<nav class="navbar navbar-expand-sm bg-light">
-		<ul class="navbar-nav">
-			<li class="nav-item"><a class="nav-link" href="${rootPath}">Home</a></li>
-
-			<sec:authorize access="isAnonymous()">
-				<li class="nav-item"><a class="nav-link"
-					href="${rootPath}/auth/login">로그인</a></li>
-			</sec:authorize>
-
-			<sec:authorize access="isAuthenticated()">
-
-				<form id="logout" method="POST" action="${rootPath}/logout">
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}">
-					<li class="nav-item"><a class="nav-link logout" href="#">로그아웃</a></li>
-				</form>
-
-			</sec:authorize>
-			<sec:authorize access="hasRole('ADMIN')">
-				<li class="nav-item"><a class="nav-link"
-					href="${rootPath}/admin/">관리자</a></li>
-			</sec:authorize>
-		</ul>
-	</nav>
+	<article>
+		<form class="form-inline" id="form-box">
+			<div class="form-group mx-sm-3 mb-2">
+				<input type="text" class="form-control" id="search-box"	placeholder="상품이름">
+			</div>
+			<button type="button" class="btn btn-primary mb-2" id="btn-search">검색</button>
+		</form>
+	</article>
 </body>
 </html>
 

@@ -13,15 +13,13 @@ import com.biz.shop.domain.ProductVO;
 import com.biz.shop.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Controller
 @RequiredArgsConstructor
 @RequestMapping(value = "/user/product")
-@Slf4j
-public class B2C_Controller {
+@Controller
+public class B2C_ControllerV2 {
 
-	private final ProductService proService;
+	public final ProductService pService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model,
@@ -29,25 +27,17 @@ public class B2C_Controller {
 
 		List<ProductVO> proList = new ArrayList<ProductVO>();
 		if (p_name == "") {
-			proList = proService.selectAll();
+			proList = pService.selectAll();
 		} else {
-			proList = proService.findByPName(p_name);
+			proList = pService.findByPName(p_name);
 		}
 		model.addAttribute("PROLIST", proList);
-
-		log.debug("list의 id는? " + proList);
 
 		return "users/user_product_list";
 	}
 
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public String detail(Model model, @RequestParam("id") long id) {
-
-		ProductVO proVO = proService.findById(id);
-		log.debug("여기는 DETAIL" + proVO.getId());
-		model.addAttribute("B2C_DTO", proVO);
-
-		return "users/user_product_detail";
+	public String detail() {
+		return "";
 	}
-
 }
