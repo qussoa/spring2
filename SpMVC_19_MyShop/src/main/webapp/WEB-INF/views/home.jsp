@@ -13,13 +13,13 @@
 		$("a.logout").click(function() {
 			$("#logout").submit()
 		})
-		
+		/*
 		$("#btn-search").click(
 			function() {
 				let product = $("#search-box").val()
 				document.location.href = "${rootPath}/user/product/list?p_name="+ product
 			})
-
+*/
 	})
 </script>
 <style>

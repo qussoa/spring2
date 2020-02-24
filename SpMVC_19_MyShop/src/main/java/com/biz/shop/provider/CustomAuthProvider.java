@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.biz.shop.domain.CustomUserDetails;
 
+import lombok.extern.slf4j.Slf4j;
+
 /*
  * supports() method가 true를  return하면
  * 정상로그인된 사용자 정보가 token 형태로 
@@ -20,6 +22,7 @@ import com.biz.shop.domain.CustomUserDetails;
  * 
  * authenticate에서 필요한 정보를 만들거나 가공할 수 있다
  */
+@Slf4j
 @Service
 public class CustomAuthProvider implements AuthenticationProvider {
 
@@ -29,6 +32,13 @@ public class CustomAuthProvider implements AuthenticationProvider {
 		
 		String username = (String) authentication.getPrincipal(); //username 추출
 		String password = (String) authentication.getCredentials(); //password 추출
+		
+		if(username == null || username.isEmpty()) {
+			
+			log.debug("LOGIN_FAIL");
+			return null;
+		}
+		
 		
 		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 		roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));

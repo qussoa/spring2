@@ -60,9 +60,7 @@ tr, td, th {
 		</nav>
 	</header>
 	<section>
-		<header class="header">
-			<h3>상품검색</h3>
-		</header>
+	
 		<c:choose>
 			<c:when test="${BODY == 'PRODUCT'}">
 				<%@ include file="/WEB-INF/views/admin/product.jsp"%>
@@ -70,7 +68,10 @@ tr, td, th {
 			<c:when test="${BODY == 'DEPT'}">
 				<%@ include file="/WEB-INF/views/admin/dept.jsp"%>
 			</c:when>
-		
+			<c:otherwise>
+				<h3>카트상품 : ${COUNT_CART}</h3>
+				<h3>배송중상품 : ${COUNT_DELIV}</h3>
+			</c:otherwise>
 		</c:choose>
 	</section>
 </body>
