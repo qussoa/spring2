@@ -15,7 +15,7 @@
 <body>
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">my shop</a>
+		<a class="navbar-brand" href="${rootPath}/user/product/list">my shop</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarResponsive" aria-controls="navbarResponsive"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +23,7 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">Home
+				<li class="nav-item active"><a class="nav-link" href="${rootPath}/user/product/list">Home
 						<span class="sr-only">(current)</span>
 				</a></li>
 				<sec:authorize access="isAnonymous()">
