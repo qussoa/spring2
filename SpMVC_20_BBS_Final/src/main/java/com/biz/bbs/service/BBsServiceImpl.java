@@ -2,27 +2,80 @@ package com.biz.bbs.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.biz.bbs.dao.BBsDao;
 import com.biz.bbs.domain.BBsVO;
+import com.biz.bbs.repository.BBsDao;
 
-@Service
+import lombok.RequiredArgsConstructor;
+
+/*
+ * 다중 select를 수행하는 method들이 있고
+ * 재귀호출에 의해서 계속되는 select 문이 실행된다
+ * 
+ * ㅁㅁ @Transactional 설정하면
+ * 다중 select를 transaction으로 보호하여
+ * 중간에 데이터 fetch가 누락되는 것을 막을 수 있다
+ */
+@Transactional
+@Service("bbsV1")
 public class BBsServiceImpl implements BBsService {
 
 	protected final BBsDao bbsDao;
-
+	
 	public BBsServiceImpl(BBsDao bbsDao) {
 		this.bbsDao = bbsDao;
 	}
 
+	/*
+	 * pagination을 수행할때
+	 * 원글목록을 page 대상으로 할것인지
+	 * 원글 + 댓글 포함한 목록 page대상으로 할 것인지 결정
+	 */
 	@Override
 	public List<BBsVO> selectAll() {
 		// TODO Auto-generated method stub
-		return bbsDao.selectAll();
+
+		List<BBsVO> mainList = bbsDao.selectAll();
+		/*
+		 * mainList를 필요한 개수만큼 page로 분할하여 사용
+		 */
+		List<BBsVO> retList = new ArrayList<BBsVO>();
+		for(BBsVO vo : mainList) {
+			retList.addAll(this.selectRepl(vo,0));
+		}
+		return retList;
+	}
+
+	
+	private List<BBsVO> selectRepl(BBsVO bbsVO, int depth) {
+		List<BBsVO> retList = new ArrayList<BBsVO>();
+		
+		
+		if(depth > 0) {
+			String b_subject = "&nbsp;";
+			for(int i = 0; i< depth; i++) {
+				b_subject += "↳";
+			}
+			b_subject += "<i class='fas fa-hand-point-right'></i>&nbsp;" + bbsVO.getB_subject();
+			bbsVO.setB_subject(b_subject);
+		}
+		retList.add(bbsVO);
+		List<BBsVO> tempList = bbsDao.findByPId(bbsVO.getB_id());
+		if (tempList.size() < 1)
+			return retList;
+		
+		List<BBsVO> repList;
+		for (BBsVO vo : tempList) {
+			repList = this.selectRepl(vo, depth+1);
+			retList.addAll(repList);
+		}
+		
+		return retList;
 	}
 
 	@Override

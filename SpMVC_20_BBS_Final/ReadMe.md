@@ -3,8 +3,8 @@
 ## Goal
  1. 단순 게시판 CRUD √
  2. 파일 업로드 구현 √
-  2-2. summernote의 이미지 기능 커스텀마이징 (2020-02-27)
- 3. 댓글 답글 기능
+  2-2. summernote의 이미지 기능 커스텀마이징 (2020-02-27) √
+ 3. 댓글 답글 기능(2020-03-02) 람다√
  4. pagination
  5. Login 회원가입 : Spring Security 중 BCrypt 비밀번호 암호화
  

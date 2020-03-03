@@ -11,12 +11,12 @@
 		$("button.btn-writer").click(function() {
 			document.location.href = "${rootPath}/insert"
 		})
-		
+
 		$(".bbs_body").click(function() {
 			let id = $(this).data("id")
-			document.location.href = "${rootPath}/detail/"+ id
+			document.location.href = "${rootPath}/detail/" + id
 		})
-		
+
 	})
 </script>
 </head>
@@ -34,7 +34,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${BBS_LIST}" var="BBS" varStatus="i" >
+					<c:forEach items="${BBS_LIST}" var="BBS" varStatus="i">
 						<tr class="bbs_body" data-id="${BBS.b_id}">
 							<td>${i.count}</td>
 							<td>${BBS.b_writer}</td>

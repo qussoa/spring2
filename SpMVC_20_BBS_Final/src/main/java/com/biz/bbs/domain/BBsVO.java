@@ -36,7 +36,7 @@ import lombok.ToString;
 public class BBsVO {
 
 	private long b_id;			// number
-	private String b_p_id;			//	number
+	private long b_p_id;			//	number
 	private String b_date_time;	//	varchar2(30)
 	private String b_writer;		//	nvarchar2(30)
 	private String b_subject;		//	nvarchar2(125)

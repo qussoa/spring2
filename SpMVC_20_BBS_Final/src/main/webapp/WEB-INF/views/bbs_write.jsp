@@ -108,7 +108,7 @@
 					<button type="button" class="btn btn-primary mr-2 active"
 						id="btn_list">목록</button>
 					<button class="btn btn-primary  mr-2" id="btn_update">저장</button>
-					<button type="button" class="btn btn-success" id="btn_delete">삭제</button>
+					
 
 				</div>
 			</form>
