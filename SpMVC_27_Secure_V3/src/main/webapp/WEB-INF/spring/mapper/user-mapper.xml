@@ -24,7 +24,7 @@
 	<select id="findById" resultMap="userAndAuthorities">
 		SELECT
 		user_name AS username,
-		user_password AS password,
+		user_pass AS password,
 		enabled, email, phone, address
 		FROM TBL_USERS WHERE id = #{id}
 	</select>
@@ -37,7 +37,7 @@
 		INSERT INTO `tbl_users`
 		(
 		`user_name`,
-		`user_password`,
+		`user_pass`,
 		`enabled`
 		)VALUES(
 

@@ -57,7 +57,7 @@
 	</bean>
 	
 	<context:component-scan base-package="com.biz.sec.service.auth"/>
-	<bean id="authProvider" class="com.biz.sec.service.auth.AuthProviederImpl">
+	<bean id="authProvider" class="com.biz.sec.service.auth.AuthProviderImpl">
 	</bean>
 	
 	<!-- 사용자 login을 검증 -->
@@ -137,11 +137,12 @@
 			logout-url="/logout"
 			invalidate-session="true"
 			delete-cookies="true"
-			logout-success-url=""
+			logout-success-url="/"
 		/>
 	</security:http>
 
 </beans>
+
 
 
 

@@ -1,10 +1,9 @@
 package com.biz.sec.controller;
 
 import java.security.Principal;
+import java.util.List;
 
-import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,13 +59,15 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/password", method = RequestMethod.GET)
+	@ResponseBody
+	@RequestMapping(value = "/password", method = RequestMethod.POST)
 	public String password(String password) {
 
 		boolean ret = userService.check_password(password);
 		if (ret)
 			return "PASS_OK";
 		return "PASS_FAIL";
+
 	}
 
 	@ResponseBody
@@ -75,17 +76,24 @@ public class UserController {
 		return "user HOME";
 	}
 
-	// @ResponseBody
+//	@ResponseBody
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
 	public String mypage(Principal principal, Model model) {
 
+		// principal
 		// UserDetailsVO userVO = (UserDetailsVO) principal;
 		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
 		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
+		userVO.setAuthorities(upa.getAuthorities());
 
 		model.addAttribute("userVO", userVO);
-		// return "user/mypage";
 		return "auth/user_view";
 	}
 
+	@RequestMapping(value = "/mypage", method = RequestMethod.POST)
+	public String mypage(UserDetailsVO userVO, String[] auth, Model model) {
+
+		int ret = userService.update(userVO, auth);
+		return "redirect:/user/mypage";
+	}
 }

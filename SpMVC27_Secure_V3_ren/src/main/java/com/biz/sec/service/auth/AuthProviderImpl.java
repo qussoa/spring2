@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.biz.sec.domain.UserDetailsVO;
 
-public class AuthProviederImpl implements AuthenticationProvider {
+public class AuthProviderImpl implements AuthenticationProvider {
 
 	@Autowired
 	@Qualifier("userDetailsService")
@@ -43,7 +43,10 @@ public class AuthProviederImpl implements AuthenticationProvider {
 		// Service->Dao 통해서 DB로 부터 사용자 정보 가져오기
 		UserDetailsVO userVO = (UserDetailsVO) userDService.loadUserByUsername(username);
 
-		if(!passwordEncoder.matches(password, userVO.getPassword())) {
+		if(!passwordEncoder.matches(
+						password.trim(), 
+						userVO.getPassword().trim()
+				)) {
 			throw new BadCredentialsException("비밀번호 오류");
 		}
 		

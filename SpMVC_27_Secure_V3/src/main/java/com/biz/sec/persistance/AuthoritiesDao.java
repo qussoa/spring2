@@ -1,4 +1,4 @@
-package com.biz.sec.persistence;
+package com.biz.sec.persistance;
 
 import java.util.List;
 
@@ -11,7 +11,13 @@ public interface AuthoritiesDao {
 	/*
 	 * 사용자이름으로 권한 테이블에서 권한 리스트를 SELECT
 	 */
+	@Select("SELECT * FROM authorities "
+			+ " WHERE username = #{username} ")
+	List<AuthorityVO> findByUserName(String username);
 
-	@Select("SELECT * FROM authorities WHERE username = #{username}")
-	List<AuthorityVO> findByUserName(String username);	
 }
+
+
+
+
+
