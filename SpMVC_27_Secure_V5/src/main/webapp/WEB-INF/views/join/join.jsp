@@ -11,122 +11,9 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/include/include-head.jspf"%>
+<link rel="stylesheet"
+	href="${rootPath}/resources/css/join.css?2020-04-09" />
 
-
-<style>
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-.join_form {
-	width: 400px;
-	padding: 40px;
-	background: black;
-	text-align: center;
-	z-index: 10;
-	border-radius: 20px;
-	box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, 0.2);
-	margin: 20px auto;
-}
-
-.join_form h2 {
-	color: white;
-	font-weight: 500;
-}
-
-.join_form h3 {
-	color: white;
-	font-weight: 300;
-	background-color: red;
-	border-radius: 20px;
-}
-
-.join_form input {
-	background: none;
-	margin: 10px auto;
-	text-align: center;
-	border: 2px solid #3498db;
-	padding: 14px 10px;
-	width: 200px;
-	outline: none;
-	color: white;
-	border-radius: 25px;
-	transition: 0.2s;
-}
-
-.join_form input:focus {
-	width: 280px;
-	border-color: #2ECC71;
-}
-
-.join_form .option {
-	text-align: right;
-	margin-right: 3px;
-}
-
-.join_form label[for="view_pass"] {
-	padding: 0 0 5px 2px;
-	cursor: pointer;
-	text-transform: uppercase;
-	margin-bottom: 10px;
-	font-size: 11px;
-	font-weight: 400;
-	text-transform: capitalize;
-	color: white;
-}
-
-.join_form input[type="checkbox"] {
-	vertical-align: middle;
-	margin: -1px 5px 0 1px;
-}
-
-.join_form input[type='checkbox']:focus {
-	width: 200px;
-}
-
-.join_form button {
-	border: 2px solid #2ECC71;
-	padding: 14px 40px;
-	background: none;
-	display: block;
-	margin: 20px auto;
-	padding: 14px 40px;
-	outline: none;
-	color: white;
-	border-radius: 25px;
-	cursor: pointer;
-}
-
-.join_form button:hover {
-	background-color: #2ECC71;
-}
-
-.naver_login img {
-	border-radius: 10px;
-}
-
-/*
- div box에 image를 2개 가져오고
- 초기에는 2번째 이미지를 감춰둔다
-*/
-.naver_login img:last-child {
-	display: none;
-}
-
-/*
-마우스를 div box에 올리면
-처음 이미지는 감추고, 두번째 이미지는 보여라
-*/
-.naver_login:hover img:last-child {
-	display: inline-block;
-}
-
-.naver_login:hover img:first-child {
-	display: none;
-}
-</style>
 
 <script>
 	$(function() {
@@ -240,39 +127,51 @@
 </script>
 <style>
 .message {
-	color: yellow;
+	color: #0062cc;
 	font-weight: bold;
 	font-size: 0.5rem;
 }
 </style>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
+	<%@ include file="/WEB-INF/views/include/include-nav.jspf"%>
 
-
-
-	<form:form method="POST" action="${rootPath}/join/user"
-		modelAttribute="userVO" class="join_form">
-
-		<h2>회원가입</h2>
-
-		<form:input type="text" path="username" placeholder="사용자 ID" />
-		<div class="message" id="m_username"></div>
-		<form:input type="password" path="password" class="view_pass"
-			placeholder="비밀번호" />
-		<input type="password" id="re_password" name="re_password"
-			class="view_pass" placeholder="비밀번호 한번 더~~">
-
-		<div class="option">
-			<label for="view_pass"> <input type="checkbox" id="view_pass">
-				비밀번호 보이기
-			</label>
+	<div class="container join-container">
+		<div class="row">
+			<div class="col-md-6 join-form">
+				<h3>회원가입</h3>
+				
+				<form:form method="POST" action="${rootPath}/join/join_next"
+					modelAttribute="userVO">
+					
+					<div class="form-group">
+						<form:input type="text" path="username" placeholder="사용자 ID"
+							class="form-control" />
+					</div>
+					
+					<div class="message form-group" id="m_username"></div>
+					
+					<div class="form-group">
+						<form:input type="password" path="password"
+							class="view_pass form-control" placeholder="비밀번호" />
+						<input type="password" id="re_password" name="re_password"
+							class="view_pass form-control" placeholder="비밀번호 재입력" >
+					</div>
+					<div class="option form-group">
+						<label for="view_pass"> 
+						<input type="checkbox"	id="view_pass" class="checkbox"> 비밀번호 보이기
+						</label>
+					</div>
+					<div class="form-group">
+						<button type="button" id="btn-join" class="btnSubmit">회원가입</button>
+					</div>
+					<div class="form-group">
+						<a href="#" type="button" id="btn-loss" class="ForgetPwd" >아이디 또는 비밀번호를 잃어버리셨어요?</a>
+					</div>
+				</form:form>
+			</div>
 		</div>
-		<button type="button" id="btn-join">회원가입</button>
-		<button type="button" id="btn-loss">ID/비번찾기</button>
-
-	</form:form>
-
+	</div>
 </body>
 </html>
 

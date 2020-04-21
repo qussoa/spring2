@@ -111,4 +111,54 @@ public class MailSendService {
 		return send_message;
 	}
 
+		/**
+		 * @since 2020-04-21
+		 *  이메일 인증을 위한 token정보를 email로 전송하기
+		 * @param email_token
+		 */
+	public void email_auth(String email_token, UserDetailsVO userVO) {
+
+		StringBuilder email_content = new StringBuilder();
+		email_content.append("<style>");
+		email_content.append(".biz-token { ");
+		email_content.append("border : 1px solid black,");
+		email_content.append("background-color : gray,");
+		email_content.append("color : white,");
+		email_content.append("font-weight : bold;");
+		email_content.append("}");
+		email_content.append("</style>");
+		
+		email_content.append("<h2>회원 가입을 환영합니다</h2>");
+		email_content.append("<p>다음의 인증코드를 회원가입 인증코드 란에 입력</p>");
+		
+		email_content.append("<div class='biz-token'>");
+		email_content.append(email_token);
+		email_content.append("</div>");
+		
+		String subject = "회원인증 코드";
+		this.sendMail(userVO.getEmail(), subject, email_content.toString());
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

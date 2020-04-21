@@ -1,44 +1,75 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="rootPath" value="${pageContext.request.contextPath}" />
 <style>
-table {
-	width: 100%;
+.art-box {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 
-tr.tr_user {
-	cursor: pointer;
+.userlist-title h3 {
+	font-weight: bold;
+	color: #5c99db;
+	text-align: center;
+	margin-top : 30px; 
+	
 }
 
-tr, td {
-	white-space: nowrap;
-	padding: 5px;
+img {
+	width: 50px;
+	margin-right: 10px;
+}
+
+.tr_user {
+	border-bottom : 1px solid gray;
+	border-radius: 0.5rem;
+	padding: 10px;
+	width: 200px;
+	height: 200px;
+	margin: 10px;
+	flex: 0 0 auto;
+
+}
+
+.no_title {
+	font-weight: bold;
+	color: #0062cc;
 }
 </style>
-<table>
-	<tr>
-		<th>NO</th>
-		<th>UserName</th>
-		<th>Email</th>
-		<th>Phone</th>
-		<th>Address</th>
-	</tr>
+
+
+<div class="userlist-title">
+	<h3>회원리스트</h3>
+</div>
+<hr>
+
+<article class="art-box">
+
 	<c:choose>
 		<c:when test="${empty userList }">
-			<tr>
-				<td colspan="5">User 정보 없음</td>
-			</tr>
+
+			<div class="text-center">User 정보 없음</div>
+
 		</c:when>
 		<c:otherwise>
 			<c:forEach items="${userList}" var="user" varStatus="i">
-				<tr data-id="${user.username}" class="tr_user">
-					<td>${i.count}</td>
-					<td>${user.username }</td>
-					<td>${user.email }</td>
-					<td>${user.phone }</td>
-					<td>${user.address }</td>
-				</tr>
+				<div data-id="${user.username}" class="tr_user ">
+
+					<div class="no_title">
+						<img src="${rootPath}/resources/img/user.png"> ${i.count}
+						${user.username }
+					</div>
+					<hr />
+					<div>
+						${user.email }<br /> ${user.phone }<br /> ${user.address }<br />
+					</div>
+				</div>
 			</c:forEach>
 		</c:otherwise>
 	</c:choose>
-</table>
+
+</article>
+
+

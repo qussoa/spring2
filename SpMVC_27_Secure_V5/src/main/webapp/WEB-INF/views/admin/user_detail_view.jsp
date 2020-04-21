@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+<%@ include file="/WEB-INF/views/include/include-head.jspf"%>
 <c:set var="rootPath" value="${pageContext.request.contextPath}" />
 
 <script>
@@ -20,6 +21,7 @@
 section {
 	margin: 10px auto;
 	width: 70%;
+	justify-content: center;
 }
 
 form {
@@ -36,41 +38,87 @@ form label {
 form input.auth {
 	display: block;
 }
+
+.userlist-title h3 {
+	font-weight: bold;
+	color: #5c99db;
+	text-align: center;
+	margin-top: 30px;
+}
+
+img {
+	width: 200px;
+	height: 200px;
+	margin: 0 auto;
+}
+
+.big-box {
+	margin-top: 64px;
+	display: flex;
+}
+
+input {
+	outline: none;
+	border: none;
+	border-bottom: 1px solid gray;
+}
+
 </style>
+
+
+<div class="userlist-title">
+	<h3>회원정보수정</h3>
+</div>
+<hr>
+
 <section>
-	<form:form modelAttribute="userVO">
-		<div>
-			<label for="username">UserName</label>
-			<form:input path="username" readonly="true" />
+	<div class="big-box">
+		<div class="img-box">
+			<img src="${rootPath}/resources/img/user.png" />
 		</div>
 		<div>
-			<label for="eamil">email </label>
-			<form:input path="email" />
+			<div class="input-boxs">
+				<form:form modelAttribute="userVO">
+					<div class="input-handle">
+						<label for="username">UserName</label>
+						<form:input path="username" readonly="true" />
+					</div>
+					<div class="input-handle">
+						<label for="eamil">email </label>
+						<form:input path="email" />
+					</div>
+					<div class="input-handle">
+						<label for="phone">phone</label>
+						<form:input path="phone" />
+					</div>
+					<div class="input-handle">
+						<label for="address">address</label>
+						<form:input path="address" />
+					</div>
+					<div>
+						<label for="address">계정 활성화 </label>
+						<form:checkbox path="enabled" />
+					</div>
+					<div id="auth_box" class="input-handle">
+						<div class="d-flex justify-content-end">
+							<button id="auth_append" type="button"
+							class="btn btn-outline-primary"
+							>권한 설정</button>
+						</div>
+						<c:if test="${not empty userVO.authorities}">
+							<c:forEach items="${userVO.authorities }" var="auth">
+								<input name="auth" value="${auth.authority }" class="auth">
+							</c:forEach>
+						</c:if>
+					</div>
+
+					<button type="button" id="btn_save" class="btn btn-outline-primary mt-2">저장</button>
+
+
+				</form:form>
+			</div>
 		</div>
-		<div>
-			<label for="phone">phone</label>
-			<form:input path="phone" />
-		</div>
-		<div>
-			<label for="address">address</label>
-			<form:input path="address" />
-		</div>
-		<div>
-			<label for="address">계정 활성화 </label>
-			<form:checkbox path="enabled" />
-		</div>
-		<div id="auth_box">
-			<button id="auth_append" type="button">권한 설정</button>
-			<c:if test="${not empty userVO.authorities}">
-				<c:forEach items="${userVO.authorities }" var="auth">
-					<input name="auth" value="${auth.authority }" class="auth">
-				</c:forEach>
-			</c:if>
-		</div>
-		<div>
-			<button type="button" id="btn_save">저장</button>
-		</div>
-	</form:form>
+	</div>
 </section>
 
 

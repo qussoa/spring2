@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -66,7 +67,7 @@ public class UserService {
 	 * 
 	 *         회원가입을 신청하면 비밀번호는 암호화하고 아이디와 비번을 DB insert 수행
 	 * 
-	 * @update 2020-04-10 Map<String,String> 구조의 VO 데이터를 UserVO로 변경
+	 * 2020-04-10 MapString,String 구조의 VO 데이터를 UserVO로 변경
 	 * 
 	 */
 	@Transactional
@@ -85,10 +86,10 @@ public class UserService {
 
 	}
 
-	/*
+	/**
 	 * @since 2020-04-20
 	 * 
-	 * @auth qussoa 새로 작성된 회원가입에서 회원가입을 처리할 method
+	 * @author qussoa 새로 작성된 회원가입에서 회원가입을 처리할 method
 	 * 
 	 * email 인증방식으로 회원가입을 처리할 것이므로 userVO를 파라메터로 받아서 emabled를 false로 처리하고 role 정보는
 	 * 업데이트 하지 않는 것으로 처리해 놓는다
@@ -237,4 +238,75 @@ public class UserService {
 		return false;
 	}
 
+	/**
+	 * @since 2020-04-21
+	 *  회원정보를 받아서 DB에 저장하고 
+	 *  회원정보를 활성화할 수 있도록 하기 위해
+	 *  인증정보를 생성한 후 Controller로 Return 
+	 * @param userVO
+	 * @return
+	 */
+	public String insert_getToken(UserDetailsVO userVO) {
+
+		// DB 저장
+		
+//		userVO.setEnabled(false);
+//		userDao.insert(userVO);
+		userVO.setEnabled(false);
+		String encpassword = passwordEncoder.encode(userVO.getPassword());
+		userVO.setPassword(encpassword);
+		userDao.insert(userVO);
+		
+		
+		String email_token = UUID.randomUUID().toString().split("-")[0].toUpperCase();
+		/*
+		email_token = UUID.randomUUID().toString();
+		String[] _t = email_token.split("-");
+		email_token = _t[0];
+		email_token = email_token.toUpperCase();
+		*/
+		
+		String enc_email_token = PBEEncyptor.getEncrypt(email_token);
+		log.debug("EMAIL_TOKEN : "+email_token);
+		
+		// Email 보내기
+		mService.email_auth(email_token,userVO);
+		return enc_email_token;
+	}
+
+	public boolean email_token_ok(String username, String secret_key, String secret_value) {
+		
+		boolean bKey = PBEEncyptor.getDecrypt(secret_key).equals(secret_value);
+		
+		if(bKey) {
+			String strUserName = PBEEncyptor.getDecrypt(username);
+			UserDetailsVO userVO = userDao.findByUserName(strUserName);
+			
+			userVO.setEnabled(true);
+			userDao.update(userVO);
+			authDao.delete(userVO.getUsername());
+			
+			List<AuthorityVO> authList = new ArrayList<>();
+			authList.add(AuthorityVO.builder().username(userVO.getUsername()).authority("ROLE_USER").build());
+			authList.add(AuthorityVO.builder().username(userVO.getUsername()).authority("USER").build());
+			authDao.insert(authList);
+		}
+		
+		return bKey;
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -17,7 +17,7 @@ body {
 }
 
 #navbar {
-	background-color: #333;
+	background-color: #0062cc;
 	position: fixed;
 	top: 0;
 	width: 100%;
@@ -28,7 +28,7 @@ body {
 #navbar a {
 	flex: 0 1 auto;
 	display: block;
-	color: #f2f2f2;
+	color: white;
 	text-align: center;
 	padding: 1rem;
 	text-decoration: none;
@@ -36,8 +36,8 @@ body {
 }
 
 #navbar a:hover {
-	background-color: #ddd;
-	color: black;
+	background-color: white;
+	color: #0062cc;
 }
 
 #navbar a:nth-child(4) {
@@ -71,7 +71,9 @@ body {
 	})
 </script>
 <nav id="navbar">
-	<a href="/">HOME</a> <a href="#">성적처리</a> <a href="#">독서록관리</a>
+	<a href="${rootPath}/">HOME</a>
+	 <a href="#">성적처리</a> 
+	<a href="#">독서록관리</a>
 	<sec:authorize access="isAnonymous()">
 		<a href="${rootPath}/user/login">로그인</a>
 	</sec:authorize>

@@ -63,11 +63,6 @@ section {
 	width: 100%;
 }
 
-form {
-	width: 70%;
-	margin: 10px auto;
-}
-
 form div.password {
 	display: none;
 }
@@ -75,31 +70,66 @@ form div.password {
 form input.auth {
 	display: block;
 }
+
+.userlist-title h2 {
+	font-weight: bold;
+	color: #5c99db;
+	text-align: center;
+	margin-top: 30px;
+}
 </style>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/include/include-nav.jspf"%>
 	<section>
-		<form:form modelAttribute="userVO">
-			<div>
-				<form:input path="username" />
+	
+		<div class="userlist-title">
+				<h2>회원정보 수정</h2>
 			</div>
-			<div class="password">
-				<input id="password" type="password" placeholder="비밀번호를 입력!!">
+		
+
+		<form:form modelAttribute="userVO" class="container">
+			<hr>
+
+			<div class="d-flex justify-content-between">
+				<div class="col-3 d-flex justify-content-center">
+					<img src="${rootPath}/resources/img/user.png" width="200px"
+						height="200px" />
+				</div>
+				<div class="col-8">
+					<div class="form-group">
+						<label>username</label>
+						<form:input path="username" class="form-control" />
+					</div>
+					<div class="password form-group">
+						<label>password</label> <input id="password" type="password"
+							placeholder="비밀번호를 입력!!" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>email</label>
+						<form:input path="email" placeholder="email" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>phone</label>
+						<form:input path="phone" placeholder="phone" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>address</label>
+						<form:input path="address" placeholder="address"
+							class="form-control" />
+					</div>
+				</div>
+
+
 			</div>
-			<div>
-				<form:input path="email" placeholder="email"/>
-			</div>
-			<div>
-				<form:input path="phone" placeholder="phone"/>
-			</div>
-			<div>
-				<form:input path="address" placeholder="address"/>
-			</div>
-			<div>
-				<button type="button" id="btn_update">수정</button>
-				<button type="submit" id="btn_save">저장</button>
-				<button type="submit" id="btn_loss_pass">비밀번호 찾기</button>
+
+
+			<hr>
+			<div class="form-group d-flex justify-content-end">
+				<button type="button" class="btn btn-primary mr-2" id="btn_update">수정</button>
+				<button type="submit" class="btn btn-primary mr-2" id="btn_save">저장</button>
+				<button type="submit" class="btn btn-primary" id="btn_loss_pass">비밀번호
+					찾기</button>
 			</div>
 		</form:form>
 	</section>
