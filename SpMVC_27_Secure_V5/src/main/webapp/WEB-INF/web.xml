@@ -27,7 +27,6 @@
 			/WEB-INF/spring/security-context.xml
 			/WEB-INF/spring/mybatis-context.xml
 			/WEB-INF/spring/naver-mail-context.xml
-			/WEB-INF/spring/gmail-mail-context.xml
 			/WEB-INF/spring/root-context.xml
 		</param-value>
 	</context-param>

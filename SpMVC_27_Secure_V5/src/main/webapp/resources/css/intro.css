@@ -1,9 +1,32 @@
 @charset "UTF-8";
+body {
+  min-height: 100vh;
+  color: #0062cc;
+  font-size: 2em;
+  display: flex;
+  align-items: center;
+}
+
+.blinking-cursor {
+  pointer-events: none;
+  user-select: none;
+  animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
 
 .myname{
 	color:#f4a42c;
 	font-weight: bold;
 	
+}
+
+.hash-tag{
+	color: #f4a42c;
 }
 
 .intro-co{
@@ -33,7 +56,7 @@ div.container-intro {
 
 #text-write-title {
 	font-weight: bold;
-	color: #0062cc;
+	color: #f4a42c;
 }
 
 p#text-write-sub {
@@ -43,7 +66,7 @@ p#text-write-sub {
 }
 
 .date-de {
-	color: #0062cc;
+	color: #f4a42c;
 	font-weight: bold;
 }
 

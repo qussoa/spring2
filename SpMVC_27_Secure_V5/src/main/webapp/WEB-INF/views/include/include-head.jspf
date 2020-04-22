@@ -16,7 +16,8 @@
 
 <link rel="stylesheet" href="https://wowjs.uk/css/libs/animate.css">
 <script src="https://wowjs.uk/dist/wow.min.js"></script>
-
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 <style>
 @font-face {
 	font-family: 'NanumSquareRound';
@@ -27,7 +28,7 @@
 	font-style: normal;
 }
 
-*{
-font-family: NanumSquareRound;
+* {
+	font-family: NanumSquareRound;
 }
 </style>
