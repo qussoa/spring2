@@ -39,7 +39,7 @@
 <body>
 	<%@ include file="/WEB-INF/views/include/include-nav.jspf"%>
 	
-	<section id="body">
+	<section id="body-section">
 
 			<ul class="nav  nav-tabs justify-content-center">
 				<li class="nav-item">

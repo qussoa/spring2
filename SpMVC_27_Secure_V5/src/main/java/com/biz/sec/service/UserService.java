@@ -14,6 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.biz.sec.domain.AuthorityVO;
@@ -59,7 +60,7 @@ public class UserService {
 
 	/**
 	 * @since 2020-04-09
-	 * @author callor
+	 * @author qussoa
 	 * 
 	 * @param username
 	 * @param password
@@ -89,7 +90,9 @@ public class UserService {
 	/**
 	 * @since 2020-04-20
 	 * 
-	 * @author qussoa 새로 작성된 회원가입에서 회원가입을 처리할 method
+	 * @author qussoa 
+	 * 
+	 * 새로 작성된 회원가입에서 회원가입을 처리할 method
 	 * 
 	 * email 인증방식으로 회원가입을 처리할 것이므로 userVO를 파라메터로 받아서 emabled를 false로 처리하고 role 정보는
 	 * 업데이트 하지 않는 것으로 처리해 놓는다
@@ -125,6 +128,7 @@ public class UserService {
 		return ret;
 	}
 
+	@Transactional
 	public boolean isExistsUserName(String username) {
 
 		UserDetailsVO userVO = userDao.findByUserName(username);
@@ -149,6 +153,7 @@ public class UserService {
 		return passwordEncoder.matches(password, userVO.getPassword());
 	}
 
+	@Transactional
 	public int update(UserDetailsVO userVO, String[] authList) {
 
 		int ret = userDao.update(userVO);

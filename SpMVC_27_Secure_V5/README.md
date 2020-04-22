@@ -123,13 +123,79 @@
   ModelAttribute VO에서 param vo 데이터를 완성하여 사용할 수 있도록 만들어 줌
 
 
+### 2020-04-22
+## @Transactional
+* MyBatis와 common-dbcp 환경에서는 context.xml에 
+<tx:annotation-driven/> 설정을 통해서 자동으로 transactional을 구현할 수 있다
+* MyBatis환경에서 실제 dao interface와 mapper.xml 등을 연동하여 DB와 query를 
+  주고 받을때는 SqlSessionTemplate라는 클래스를 통해서 사용한다
+  
+* DataSourceTransactionalManager를 context.xml에 설정을 하게 되면
+  SqlSessionTemplate를 사용하지 않아도 내부적으로 자체 처리가 된다
+
+* DataSourceTransactionalManager가 SqlSessionTemplate 역할을 대신 수행하기도 한다
+
+* 여기에서 <tx:annotation-driven/> 항목이 없고, class나 method에서 @Transactional 설정이 없으면
+  DataSourcesTransactional과 같은 역할만 수행한다
+  
+* 혹시 <tx:annotation-driven/>을 설정했는데 @Transactional 설정된 method에서 transaction이
+  적용이 안될때가 있는데 이 때는 <tx:annotation-driven/> 코드 위쪽에 <context:annotation-config />를
+  설정해 주어야 한다   
+
+* @Transactional에는 특별히 세세하게 설정할 수 있는 옵션들이 있다
+
+## @Transactiona의 옵션
+
+#### isolation
+* 현재 transaction이 작동되는 과정에서 다른 transaction이 접근하는 정도를 설정
+
+* READ_UNCMMITED : level 0
+- transaction 처리 중 또는 COMMIT이 완료되기 전에 다른 transaction이 읽기를 수행할 수 있다 
+
+* READ_COMMITED : level 1
+- transaction이 commit된 후에만 다른 transaction을 읽을 수 있다
+
+* REFEATABLE_READ : level 2
+- transaction이 진행되는 동안에 select 문장이 사용되는 table에 lock을 걸기
+  select가 실행되거나 실행될 예정인 DB(table)에는 CUD를 수행할 수 없도록하며 
+  단, 다른 transaction에서 제한적으로 select가 가능하다
+  
+- 다수의 transaction이 select를 수행할때 일관된 무결성 있는 데이터를 가져갈 수 있도록 보장
+
+* SELIALIZABLE : level 3
+- 완벽한 일관성이 있는 select를 보장 
+
+#### propagation : 전파 옵션
+* 현재 transaction이 시작되었음을 다른 transaction에 어떻게 알릴 것인가
+
+* REQUIRED 
+- 부모 transaction이 실행되는 과정에서 또 자식 (세부적인) transaction을 실행할 수 있도록 허용
+- 이미 자식 transaction이 실행되고 있으면 새로 생성 금지
+
+* REQUIRED_NEW
+- REQUIRED와 비슷하지만 자식 transaction이 이미 실행되고 있지만 무조건 새로 다시 생성하라
 
 
+#### readonly
+* 해당 transaction을 읽기 전용으로 설정하겠다. 기본값 false
 
-
-
+#### rollbackFor
+* rollback 조건을 무엇으로 하겠나 특별히 어떤 예외가 발생했을때만 
+ rollback이 되도록 설정할때 추가, 기본값은 Exception
  
+#### noRollbackFor
+* rollbackFor와 반대되는 개념, 특별한 예외에서는 rollback을 무시 기본값 null
 
+#### timeout
+* DB와 연결하여, transaction이 실행되는 시간이 과도하게 진행될 경우
+  rollback을 수행하도록 설정. 기본값 -1, timeout rollback 금지
+ 
+### List Insert  수행할때 주의 사항
+* 서비스 코드에서 다음과 같은 코드 절대 사용 금지
+
+for(DataVO vo : dataList){
+	dao.insert();
+}
 
 
 

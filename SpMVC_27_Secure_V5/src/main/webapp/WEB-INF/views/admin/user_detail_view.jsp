@@ -72,7 +72,8 @@ input {
 <hr>
 
 <section>
-	<div class="big-box">
+	<div class="big-box d-flex justify-content-center
+	">
 		<div class="img-box">
 			<img src="${rootPath}/resources/img/user.png" />
 		</div>

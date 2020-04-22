@@ -9,13 +9,10 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
-<style>
-#body {
-	height: 1000px;
-}
-</style>
-<section id="body">
 
+
+<section class="container">
+<%@ include file="/WEB-INF/views/intro.jsp" %>
 
 </section>
 

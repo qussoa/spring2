@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+.myname{
+	color:#f4a42c;
+	font-weight: bold;
+	
+}
+
+.intro-co{
+	color:#797c80;
+	
+}
+div.container-intro {
+	margin-top: 100px;
+}
+
+.my-img {
+	width: 200px;
+	height: 200px;
+}
+
+.github {
+	height: 50px;
+}
+
+.main-story {
+	text-align: center;
+}
+
+.test {
+	width: 60%;
+}
+
+#text-write-title {
+	font-weight: bold;
+	color: #0062cc;
+}
+
+p#text-write-sub {
+	font-size: 15px;
+	line-height: 50%;
+	color: #8b8f94;
+}
+
+.date-de {
+	color: #0062cc;
+	font-weight: bold;
+}
+
+.de-write {
+	color: #8b8f94;
+}
+
+.main-story-title{
+	color: #0b509c;
+	
+}
