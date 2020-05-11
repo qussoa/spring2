@@ -82,7 +82,8 @@ public class UserController {
 
 		// principal
 		// UserDetailsVO userVO = (UserDetailsVO) principal;
-		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		UsernamePasswordAuthenticationToken upa
+		= (UsernamePasswordAuthenticationToken) principal;
 		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
 		userVO.setAuthorities(upa.getAuthorities());
 

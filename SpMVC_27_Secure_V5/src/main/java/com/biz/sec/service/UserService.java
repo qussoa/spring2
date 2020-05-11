@@ -45,12 +45,20 @@ public class UserService {
 		this.mService = mService;
 
 		String create_user_table = " CREATE TABLE IF NOT EXISTS tbl_users ("
-				+ "	id bigint  PRIMARY KEY AUTO_INCREMENT, " + "	user_name varchar(50) UNIQUE, "
-				+ "	user_pass varchar(125), " + "   enabled boolean default true, " + "	email varchar(50), "
-				+ "	phone varchar(20), " + "	address varchar(125) " + " ) ";
+				+ "	id bigint  PRIMARY KEY AUTO_INCREMENT, "
+				+ "	user_name varchar(50) UNIQUE, "
+				+ "	user_pass varchar(125), "
+				+ "   enabled boolean default true, "
+				+ "	email varchar(50), "
+				+ "	phone varchar(20), " 
+				+ "	address varchar(125) " 
+				+ " ) ";
 
-		String create_auth_table = " CREATE TABLE IF NOT EXISTS authorities ("
-				+ "	id bigint PRIMARY KEY AUTO_INCREMENT," + "    username varchar(50)," + "    authority varchar(50)"
+		String create_auth_table 
+		= " CREATE TABLE IF NOT EXISTS authorities ("
+				+ "	id bigint PRIMARY KEY AUTO_INCREMENT," 
+				+ "    username varchar(50),"
+				+ "    authority varchar(50)"
 				+ " ) ";
 
 		userDao.create_table(create_user_table);
@@ -76,12 +84,16 @@ public class UserService {
 
 		// 회원가입 form에서 전달받은 password 값을 암호화 시키는 과정
 		String encPassword = passwordEncoder.encode(password);
-		UserDetailsVO userVO = UserDetailsVO.builder().username(username).password(encPassword).build();
+		UserDetailsVO userVO 
+		= UserDetailsVO.builder()
+		.username(username).password(encPassword).build();
 
 		int ret = userDao.insert(userVO);
 		List<AuthorityVO> authList = new ArrayList<>();
 		authList.add(AuthorityVO.builder().username(userVO.getUsername()).authority("ROLE_USER").build());
-		authList.add(AuthorityVO.builder().username(userVO.getUsername()).authority("USER").build());
+		authList.add(AuthorityVO
+				.builder().username(userVO.getUsername())
+				.authority("USER").build());
 		authDao.insert(authList);
 		return ret;
 
@@ -147,7 +159,8 @@ public class UserService {
 	}
 
 	public boolean check_password(String password) {
-		UserDetailsVO userVO = (UserDetailsVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetailsVO userVO = (UserDetailsVO) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
 
 		log.debug(userVO.toString());
 		return passwordEncoder.matches(password, userVO.getPassword());
@@ -161,7 +174,9 @@ public class UserService {
 			List<AuthorityVO> authCollection = new ArrayList<>();
 			for (String auth : authList) {
 				if (!auth.isEmpty()) {
-					AuthorityVO authVO = AuthorityVO.builder().username(userVO.getUsername()).authority(auth).build();
+					AuthorityVO authVO = AuthorityVO.builder()
+							.username(userVO.getUsername())
+							.authority(auth).build();
 					authCollection.add(authVO);
 				}
 			}
@@ -175,7 +190,8 @@ public class UserService {
 	@Transactional
 	public int update(UserDetailsVO userVO) {
 
-		Authentication oldAuth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication oldAuth = SecurityContextHolder
+				.getContext().getAuthentication();
 
 		UserDetailsVO oldUserVO = (UserDetailsVO) oldAuth.getPrincipal();
 
@@ -186,7 +202,9 @@ public class UserService {
 		int ret = userDao.update(userVO);
 		if (ret > 0) {
 
-			Authentication newAuth = new UsernamePasswordAuthenticationToken(oldUserVO, oldAuth.getCredentials(),
+			Authentication newAuth 
+			= new UsernamePasswordAuthenticationToken(
+					oldUserVO, oldAuth.getCredentials(),
 					oldAuth.getAuthorities());
 			SecurityContextHolder.getContext().setAuthentication(newAuth);
 
@@ -263,7 +281,8 @@ public class UserService {
 		userDao.insert(userVO);
 		
 		
-		String email_token = UUID.randomUUID().toString().split("-")[0].toUpperCase();
+		String email_token = UUID.randomUUID()
+				.toString().split("-")[0].toUpperCase();
 		/*
 		email_token = UUID.randomUUID().toString();
 		String[] _t = email_token.split("-");
